@@ -97,6 +97,7 @@ small{color:var(--muted);}
 
 <div class="card">
   <h3 id="total">Today Total: ₹0</h3>
+  <h3 id="monthTotal">This Month: ₹0</h3>
 <h3>Expenses</h3>
 <div id="list"></div>
 </div>
@@ -121,6 +122,8 @@ localStorage.setItem("expenses",JSON.stringify(expenses));
 document.getElementById("amount").value="";
 document.getElementById("note").value="";
 render();
+updateMonthTotal();
+  
 }updateTotal();
 function del(i){
 expenses.splice(i,1);
@@ -141,6 +144,21 @@ list.innerHTML+=`
 });
 }
   function updateTotal(){
+  function updateMonthTotal(){
+  let month = new Date().getMonth();
+  let year = new Date().getFullYear();
+  let total = 0;
+
+  expenses.forEach(e=>{
+    let d = new Date(e.date);
+    if(d.getMonth() === month && d.getFullYear() === year){
+      total += Number(e.amount);
+    }
+  });
+
+  document.getElementById("monthTotal").innerText =
+    "This Month: ₹" + total;
+  }
   let total = 0;
   expenses.forEach(e => total += Number(e.amount));
   document.getElementById("total").innerText = "Today Total: ₹" + total;
