@@ -96,6 +96,7 @@ small{color:var(--muted);}
 </div>
 
 <div class="card">
+  <h3 id="total">Today Total: ₹0</h3>
 <h3>Expenses</h3>
 <div id="list"></div>
 </div>
@@ -120,8 +121,7 @@ localStorage.setItem("expenses",JSON.stringify(expenses));
 document.getElementById("amount").value="";
 document.getElementById("note").value="";
 render();
-}
-
+}updateTotal();
 function del(i){
 expenses.splice(i,1);
 localStorage.setItem("expenses",JSON.stringify(expenses));
@@ -140,6 +140,12 @@ list.innerHTML+=`
 </div>`;
 });
 }
+  function updateTotal(){
+  let total = 0;
+  expenses.forEach(e => total += Number(e.amount));
+  document.getElementById("total").innerText = "Today Total: ₹" + total;
+  }
+  
 render();
 </script>
 
